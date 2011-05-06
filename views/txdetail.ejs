@@ -1,0 +1,18 @@
+<dl class="txdetail">
+  <dt>Transaction ID</dt>
+  <dd>
+	<%=hash.substr(0,20)%><span class="rest"><%=hash.substr(20)%></span>
+    <% if (tx.block) { %><div class="links">&rarr; <a href="http://blockexplorer.com/tx/<%=hash%>" target="_blank">Block Explorer</a></div><% } %>
+  </dd>
+  <dt>Block</dt>
+  <% if (tx.block) { %>
+	  <dd>
+		  <%=tx.block.height%>
+		  <div class="links">&rarr; <a href="http://blockexplorer.com/b/<%=tx.block.height%>" target="_blank">Block Explorer</a></div>
+	  </dd>
+  <% } else { %>
+	  <dd>Not included in block chain yet</dd>
+  <% } %>
+  <dt>Amount</dt>
+  <dd><%=impact.sign > 0 ? "+" : "-"%><%=Bitcoin.Util.formatValue(impact.value)%></dd>
+</dl>

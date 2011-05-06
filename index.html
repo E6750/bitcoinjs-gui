@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebCoin ALPHA</title>
+	<link href="http://fonts.googleapis.com/css?family=Anonymous+Pro:regular,bold" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="stylesheets/aristo/jquery-ui-1.8.7.custom.css">
+	<link rel="stylesheet" href="stylesheets/style.css">
+	<script type="text/javascript" src="scripts/ejs/ejs.js"></script>
+	<script type="text/javascript" src="scripts/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript" src="scripts/jquery/jquery-1.5.2.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery/jquery.json-2.2.js"></script>
+	<script type="text/javascript" src="scripts/jquery/jquery-ui-1.8.11.custom.min.js"></script>
+	<script type="text/javascript" src="scripts/zeroclipboard/ZeroClipboard.js"></script>
+	<script type="text/javascript" src="scripts/autoNumeric-1.6.2.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/crypto-js/crypto.js"></script>
+
+	<script type="text/javascript" src="scripts/bitcoin-js/crypto-js/sha256.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/crypto-js/ripemd160.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/jsbn/prng4.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/jsbn/rng.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/jsbn/jsbn.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/jsbn/jsbn2.js"></script>
+
+	<script type="text/javascript" src="scripts/bitcoin-js/jsbn/ec.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/jsbn/sec.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/events/eventemitter.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/bitcoin.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/util.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/base58.js"></script>
+
+	<script type="text/javascript" src="scripts/bitcoin-js/address.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/ecdsa.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/eckey.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/opcode.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/script.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/transaction.js"></script>
+
+	<script type="text/javascript" src="scripts/bitcoin-js/wallet.js"></script>
+	<script type="text/javascript" src="scripts/bitcoin-js/txdb.js"></script>
+	<script type="text/javascript" src="scripts/util.js"></script>
+	<script type="text/javascript" src="scripts/message.js"></script>
+	<script type="text/javascript" src="scripts/txview.js"></script>
+	<script type="text/javascript" src="scripts/exitnode.js"></script>
+
+	<script type="text/javascript" src="scripts/index.js"></script>
+</head>
+<body>
+  <div id="hld">
+	<div class="wrapper">
+	  <div id="header">
+		<div class="hdrl"></div>
+		<div class="hdrr"></div>
+		
+		<h1><a href="#">WebCoin</a></h1>
+
+		
+		<ul id="nav">
+		  <!--
+		  <li><a href="#">Dashboard</a></li>
+		  <li class="active"><a href="#">Pages</a>
+		  -->
+		  <li>
+			<a href="#">Tools</a>
+			<ul>
+			  <li><a id="address_load_open" href="#">Transaction Viewer</a></li>
+			</ul>
+		  </li>
+
+		  <!--
+		  <li><a href="#">Posts</a></li>
+		  <li><a href="#">Media</a>
+		  <ul>
+			<li><a href="#">List media</a></li>
+
+			<li><a href="#">Add media</a></li>
+			<li><a href="#">Something else</a></li>
+		  </ul>
+		  </li>
+		  <li><a href="#">Users</a></li>
+		  -->
+		</ul>
+		
+		<p class="user"><!--Hello, <a href="#">John</a> | <a href="index.html">Logout</a>--></p>
+	  </div><!-- END #header -->
+	  <div class="block">
+  <div class="block_head">
+	<div class="bheadl"></div>
+	<div class="bheadr"></div>
+	<h2>Wallet</h2>
+
+	<ul>
+	  <li><a href="#" id="wallet_active_recreate">Create</a></li>
+	</ul>
+  </div><!-- END .block_head -->
+  <div class="block_content">
+	<div id="wallet_init">
+	  <p>You currently have no wallet. Use the button in the top right to create one.</p>
+	  <p id="wallet_init_status"></p>
+
+	</div>
+	<div id="wallet_active">
+	  <form>
+		<p>
+		  <label>Your Bitcoin Address:</label>
+		  <input id="addr" class="text small" readonly="readonly"/>
+		  <button class="new_addr">New&hellip;</button>
+		  <button id="addr_clip">Copy to Clipboard</button>
+
+		</p>
+		<p>
+		  <label style="vertical-align: bottom">Your Balance:</label>
+		  <span class="balance"><span class="value">0.00</span> BTC</span>
+		</p>
+		<p>
+		  <button id="nav_send_money">Send Money</button>
+
+		</p>
+	  </form>
+	</div>
+  </div><!-- END .block_content -->
+  <div class="bendl"></div>
+  <div class="bendr"></div>
+</div><!-- END .block -->
+<div class="block">
+  <div class="block_head">
+	<div class="bheadl"></div>
+
+	<div class="bheadr"></div>
+	<h2>Transactions</h2>
+  </div><!-- END .block_head -->
+  <div class="block_content" id="main_tx_list">
+  </div><!-- END .block_content -->
+  <div class="bendl"></div>
+  <div class="bendr"></div>
+</div><!-- END .block -->
+
+	  <div id="footer">
+		<p class="left">Copyright &copy; 2011 Stefan Thomas</p>
+		<p class="right">Powered by <a href="https://github.com/bitcoinjs/node-bitcoin-p2p">node-bitcoin-p2p</a></p>	
+	  </div>
+	</div><!-- END #wrapper -->
+  </div><!-- END #hld -->
+
+  <div id="address_load" title="Load Transactions">
+	<div class="query">
+	  <p>Load the transaction list for any set of Bitcoin addresses, enter them here (one address per line):</p>
+	  <textarea id="addresses" rows="10" style="width: 90%">194bQBXeX9kYTqB4sZxWCLo11CdVDhd4Yo
+1D74YfetgQuFoqJzChyo7RsDYYP2YXzotX
+1CCQM7kP8Ec7vCupUbvPGNU6PhBjHHcmVx</textarea>
+	  <div><button id="address_load_start">Fetch transactions</button></div>
+	</div>
+	<div class="progress"></div>
+
+	<div class="result">
+	  <div class="txs"></div>
+	  <button id="address_load_reset">&laquo; Back</button>
+	</div>
+  </div>
+
+  <div id="dialog_send_money" title="Send Money" class="block">
+	<form class="entry">
+
+	  <div class="messages"></div>
+	  <p> 
+		<label>Amount:</label><br /> 
+		<input id="dialog_send_money_amount" type="text" class="text tiny auto amount" />
+	  </p>
+	  <p>
+		<label>Pay to:</label><br />
+		<input type="text" class="text small address" /><br />
+		<span class="note" style="padding-left: 0">A Bitcoin Address, e.g. 1KPiGQYcMApEhJfcerftexfCDV7xKZt7fe</span>
+
+	  </p>
+	  <p>
+		<button class="send">Send</button>
+		<button class="cancel">Cancel</button>
+	  </p>
+	</form>
+	<div class="confirm">
+	  <p>You are about to send <span class="confirm_amount"></span> to the address <span class="confirm_address">1OIJIPSDJG0sdJG)SDJG0sadjgF</span>.</p>
+
+	  <p>Bitcoin transactions are irrevocable. Would you like to proceed?</p>
+	  <p><button class="confirm_send">Confirm</button> or <a class="cancel_confirm" href="#">go back</a></p>
+	</div>
+	<div class="loading">
+	  <img src="images/walletsend.gif" alt="Sending coins...">
+	  <p>Sending coins...</p>
+
+	</div>
+  </div>
+</body>
+</html>
