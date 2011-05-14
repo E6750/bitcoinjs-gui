@@ -164,8 +164,8 @@ $(function () {
 	});
 	sendDialog.find('.amount').autoNumeric({
 		aSign: "BTC ",
-		mDec: 2,
-		aPad: true
+		mDec: 8,
+		aPad: 2
 	});
 	$('#nav_send_money').click(function (e) {
 		e.preventDefault();

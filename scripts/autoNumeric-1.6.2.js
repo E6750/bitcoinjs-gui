@@ -321,9 +321,17 @@
 			dPos = 1;
 		}
 		if (dPos == -1 || dPos == iv.length - 1){/* Has an integer been passed in? */
-            if (aPad && mDec > 0) {
+			var rDec;
+			if ("number" === typeof aPad) {
+				rDec = aPad;
+			} else if (aPad && mDec > 0) {
+				rDec = mDec;
+			} else {
+				rDec = 0;
+			}
+			if (rDec) {
 				ivRounded = (dPos == -1) ? iv + '.' : iv;
-				for(i = 0; i < mDec; i++){/* pads with zero */
+				for(i = 0; i < rDec; i++){/* pads with zero */
 						ivRounded += '0';
 				}
 				return nSign + ivRounded;
@@ -336,9 +344,17 @@
 		if (cDec == mDec){
 			return nSign + iv;/* If true return value no rounding required */
 		}
-		if (cDec < mDec && aPad){/* Do we already have less than the number of decimal places we want? */
+		var rDec;
+		if ("number" === typeof aPad) {
+			rDec = aPad;
+		} else if (aPad && mDec > 0) {
+			rDec = mDec;
+		} else {
+			rDec = 0;
+		}
+		if (cDec < rDec){/* Do we already have less than the number of decimal places we want? */
 			ivRounded = iv;/* If so, pad out with zeros */
-			for(i = cDec; i < mDec; i++){
+			for(i = cDec; i < rDec; i++){
 				ivRounded += '0';
 			}
 			return nSign + ivRounded;
