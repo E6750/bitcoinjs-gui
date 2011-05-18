@@ -57,9 +57,6 @@ $(function () {
 	txView.setMemPool(txMem);
 	txView.setWallet(wallet);
 
-	// Load wallet if there is one
-	walletMan.init();
-
 	// Once wallet is loaded, we can connect to the exit node
 	var exitNode = new ExitNode('192.168.0.17', 3125, wallet, txDb, txMem, txView);
 
@@ -122,6 +119,9 @@ $(function () {
 
 		exitNode.disconnect();
 	});
+
+	// Load wallet if there is one
+	walletMan.init();
 
 	// Interface buttons
 	$('#wallet_init_create').click(function (e) {
