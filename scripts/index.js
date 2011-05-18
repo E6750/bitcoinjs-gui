@@ -48,6 +48,7 @@ $(function () {
 	});
 
 	var wallet = new Bitcoin.Wallet();
+	var walletMan = new WalletManager(wallet);
 	var txDb = new TransactionDatabase(); // Tx chain
 	var txMem = new TransactionDatabase(); // Memory pool
 	var txView = new TransactionView($('#main_tx_list'));
@@ -56,17 +57,17 @@ $(function () {
 	txView.setMemPool(txMem);
 	txView.setWallet(wallet);
 
-	if (wallet.loadLocal()) {
-		$('#wallet_active').show();
-		$('#wallet_init').hide();
-		updateWallet();
-	} else {
-		$('#wallet_active').hide();
-		$('#wallet_init').show();
-	}
+	// Load wallet if there is one
+	walletMan.init();
 
 	// Once wallet is loaded, we can connect to the exit node
 	var exitNode = new ExitNode('192.168.0.17', 3125, wallet, txDb, txMem, txView);
+
+	$(exitNode).bind('connectStatus', function (e) {
+		console.log('connect', e);
+		$('#exitnode_status').removeClass('unknown error warning ok');
+		$('#exitnode_status').addClass(e.status);
+	});
 
 	$(exitNode).bind('blockInit blockAdd blockRevoke', function (e) {
 		txView.setBlockHeight(e.height);
@@ -97,29 +98,40 @@ $(function () {
 		updateBalance();
 	});
 
-	function createWallet() {
-		wallet.initNew(function (n, total) {
-			if (n >= total) {
-				$("#wallet_init_status").text("");
-				$('#wallet_active').show();
-				$('#wallet_init').hide();
-				wallet.save();
-				updateWallet();
-			} else {
-				$("#wallet_init_status").text("Creating wallet "+n+"/"+total);
-			}
-		});
-	}
+	$(walletMan).bind('walletProgress', function (e) {
+		$("#wallet_init_status").text("Creating wallet "+e.n+"/"+e.total);
+	});
 
+	$(walletMan).bind('walletInit', function (e) {
+		$("#wallet_init_status").text("");
+		$('#wallet_active').show();
+		$('#wallet_init').hide();
+
+		var addr = wallet.getCurAddress().toString();
+		$('#addr').val(addr);
+		addrClip.setText(addr);
+		addrClip.reposition();
+
+		exitNode.connect();
+	});
+
+	$(walletMan).bind('walletDeinit', function (e) {
+		$("#wallet_init_status").text("");
+		$('#wallet_active').hide();
+		$('#wallet_init').show();
+
+		exitNode.disconnect();
+	});
+
+	// Interface buttons
 	$('#wallet_init_create').click(function (e) {
 		e.preventDefault();
-		createWallet();
+		walletMan.createWallet();
 	});
 	$('#wallet_active_recreate').click(function (e) {
 		e.preventDefault();
-		if (wallet.getBalance().equals(BigInteger.ZERO) || prompt("WARNING: This action will make the application forget your current wallet. Unless you have the wallet backed up, this is final and means your balance will be lost forever!\n\nIF YOU ARE SURE, TYPE \"YES\".") === "YES") {
-			wallet.clear();
-			createWallet();
+		if (prompt("WARNING: This action will make the application forget your current wallet. Unless you have the wallet backed up, this is final and means your balance will be lost forever!\n\nIF YOU ARE SURE, TYPE \"YES\".") === "YES") {
+			walletMan.createWallet();
 		}
 	});
 
@@ -131,30 +143,9 @@ $(function () {
 		addrClip.reposition();
 	});
 
-	function updateWallet() {
-		var addr = wallet.getCurAddress().toString();
-		$('#addr').val(addr);
-		addrClip.setText(addr);
-		addrClip.reposition();
-	};
-
 	function updateBalance() {
 		$('#wallet_active .balance .value').text(Bitcoin.Util.formatValue(wallet.getBalance()));
 	};
-	/*
-	function updateTransactions() {
-		var addresses = wallet.getAllAddresses();
-		$.get('/pubkeys/register', {keys: addresses.join(',')}, function (data) {
-			$.get('/pubkeys/gettxs', {handle: data.handle}, function (data) {
-				for (var i = 0; i < data.txs.length; i++) {
-					wallet.process(data.txs[i]);
-				}
-				txDb.parseChainData(data);
-				$('#wallet_active .balance .value').text(Bitcoin.Util.formatValue(wallet.getBalance()));
-			}, 'json');
-		});
-	};
-	*/
 
 	// Send Money Dialog
 	var sendDialog = $('#dialog_send_money').dialog({

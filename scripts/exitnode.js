@@ -1,7 +1,9 @@
 var ExitNode = function (serverUrl, port, wallet, txDb, txMem, txView) {
 	this.socket = new io.Socket(serverUrl, {port: port});
-	this.socket.connect();
 	this.socket.on('connect', $.proxy(this.handleConnect, this));
+	this.socket.on('error', function () {
+		console.log('error, test');
+	});
 	this.socket.on('message', $.proxy(this.handleMessage, this));
 	this.socket.on('disconnect', $.proxy(this.handleDisconnect, this));
 
@@ -13,6 +15,18 @@ var ExitNode = function (serverUrl, port, wallet, txDb, txMem, txView) {
 	this.txDb = txDb;
 	this.txMem = txMem;
 	this.txView = txView;
+};
+
+ExitNode.prototype.connect = function () {
+	this.socket.connect();
+};
+
+ExitNode.prototype.disconnect = function () {
+	this.socket.disconnect();
+
+	var connectStatusEvent = jQuery.Event('connectStatus');
+	connectStatusEvent.status = 'unknown';
+	$(self).trigger(connectStatusEvent);
 };
 
 /**
@@ -54,6 +68,10 @@ ExitNode.prototype.handleConnect = function () {
 			$(self).trigger(txDataEvent);
 
 			// TODO: Download more transactions
+
+			var connectStatusEvent = jQuery.Event('connectStatus');
+			connectStatusEvent.status = 'ok';
+			$(self).trigger(connectStatusEvent);
 		});
 
 		self.call("pubkeysUnconfirmed", {

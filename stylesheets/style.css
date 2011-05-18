@@ -272,6 +272,28 @@ a:hover {
 #header .user a { text-decoration: underline; }
 #header .user a:hover { text-decoration: none; }
 
+#header .connectstatus {
+	float: right;
+	height: 50px;
+	background-image: url(../images/hdrc.png);
+	background-position: bottom left;
+	padding: 0 10px;
+	border: 1px solid black;
+	border-top: 0;
+	border-bottom: 0;
+}
+
+#header .connectstatus.ok {
+	background-position: top left;
+}
+
+#exitnode_status div {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	background-image: url(../images/icon_net.png);
+	margin: 9px 0 0 0;
+}
 
 /* Blocks */
 
