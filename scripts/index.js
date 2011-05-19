@@ -47,6 +47,7 @@ $(function () {
 		addrClipButton.removeClass('ui-state-focus');
 	});
 
+	var cfg = new Settings();
 	var wallet = new Bitcoin.Wallet();
 	var walletMan = new WalletManager(wallet);
 	var txDb = new TransactionDatabase(); // Tx chain
@@ -58,7 +59,9 @@ $(function () {
 	txView.setWallet(wallet);
 
 	// Once wallet is loaded, we can connect to the exit node
-	var exitNode = new ExitNode('192.168.0.17', 3125, wallet, txDb, txMem, txView);
+	var exitNodeHost = cfg.get('exitNodeHost');
+	var exitNodePort = cfg.get('exitNodePort');
+	var exitNode = new ExitNode(exitNodeHost, +exitNodePort, wallet, txDb, txMem, txView);
 
 	$(exitNode).bind('connectStatus', function (e) {
 		console.log('connect', e);
