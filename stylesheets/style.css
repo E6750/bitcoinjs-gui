@@ -9,6 +9,7 @@ Author URI: http://themeforest.net/user/enstyled
 
 /* Custom fonts */
 @import url("../fonts/titillium/stylesheet.css");
+@import url("../fonts/anonymous/stylesheet.css");
 
 * { padding:0; margin:0; }
 	
