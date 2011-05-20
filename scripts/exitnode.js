@@ -1,11 +1,5 @@
-var ExitNode = function (serverUrl, port, wallet, txDb, txMem, txView) {
-	this.socket = new io.Socket(serverUrl, {port: port});
-	this.socket.on('connect', $.proxy(this.handleConnect, this));
-	this.socket.on('error', function () {
-		console.log('error, test');
-	});
-	this.socket.on('message', $.proxy(this.handleMessage, this));
-	this.socket.on('disconnect', $.proxy(this.handleDisconnect, this));
+var ExitNode = function (host, port, wallet, txDb, txMem, txView) {
+	this.setSocket(host, port);
 
 	this.unique = 1;
 
@@ -17,6 +11,16 @@ var ExitNode = function (serverUrl, port, wallet, txDb, txMem, txView) {
 	this.txView = txView;
 };
 
+ExitNode.prototype.setSocket = function (host, port) {
+	this.socket = new io.Socket(host, {port: port});
+	this.socket.on('connect', $.proxy(this.handleConnect, this));
+	this.socket.on('error', function () {
+		console.log('error, test');
+	});
+	this.socket.on('message', $.proxy(this.handleMessage, this));
+	this.socket.on('disconnect', $.proxy(this.handleDisconnect, this));
+};
+
 ExitNode.prototype.connect = function () {
 	this.socket.connect();
 };
@@ -26,7 +30,7 @@ ExitNode.prototype.disconnect = function () {
 
 	var connectStatusEvent = jQuery.Event('connectStatus');
 	connectStatusEvent.status = 'unknown';
-	$(self).trigger(connectStatusEvent);
+	$(this).trigger(connectStatusEvent);
 };
 
 /**

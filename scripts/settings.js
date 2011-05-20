@@ -10,8 +10,22 @@ var Settings = function () {
 	}
 
 	// Apply client-defined settings
-	if (localStorage && localStorage['settings']) {
-		$.extend(this.settings, localStorage['settings']);
+	if (localStorage) {
+		if (localStorage['settings']) {
+			try {
+				this.persistentSettings = JSON.parse(localStorage['settings']);
+
+				if ("object" !== typeof this.persistentSettings) {
+					this.persistentSettings = {};
+				}
+			} catch (e) {
+				console.error(e);
+				this.persistentSettings = {};
+			}
+			$.extend(this.settings, this.persistentSettings);
+		} else {
+			this.persistentSettings = {};
+		}
 	}
 };
 
@@ -21,7 +35,7 @@ Settings.defaultSettings = {};
 // These are the hardcoded default settings
 Settings.globalDefaultSettings = {
 	// Currently, the recommended default fee is 0.1 BTC
-	fee: 0.1,
+	fee: 0.01,
 
 	// By default we'll look for an exit node running on the same
 	// host as the web server.
@@ -42,15 +56,24 @@ Settings.prototype.apply = function (newSettings) {
 	for (var i in newSettings) {
 		if (newSettings.hasOwnProperty(i)) {
 			if (newSettings[i] != this.settings[i]) {
-				var settingChangeEvent = jQuery.Event('settingsChange');
+				var settingChangeEvent = jQuery.Event('settingChange');
 				settingChangeEvent.key = i;
 				settingChangeEvent.oldValue = this.settings[i];
 				settingChangeEvent.newValue = newSettings[i];
 
 				this.settings[i] = newSettings[i];
+				this.persistentSettings[i] = newSettings[i];
 
 				$(this).trigger(settingChangeEvent);
 			}
 		}
+	}
+
+	this.save();
+};
+
+Settings.prototype.save = function () {
+	if (localStorage) {
+		localStorage['settings'] = JSON.stringify(this.persistentSettings);
 	}
 };

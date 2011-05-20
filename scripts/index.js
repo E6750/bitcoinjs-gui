@@ -47,6 +47,13 @@ $(function () {
 		addrClipButton.removeClass('ui-state-focus');
 	});
 
+	// Options for autoNumeric to render BTC amounts
+	var autoNumericBtc = {
+		aSign: "BTC ",
+		mDec: 8,
+		aPad: 2
+	};
+
 	var cfg = new Settings();
 	var wallet = new Bitcoin.Wallet();
 	var walletMan = new WalletManager(wallet);
@@ -62,6 +69,18 @@ $(function () {
 	var exitNodeHost = cfg.get('exitNodeHost');
 	var exitNodePort = cfg.get('exitNodePort');
 	var exitNode = new ExitNode(exitNodeHost, +exitNodePort, wallet, txDb, txMem, txView);
+
+	$(cfg).bind('settingChange', function (e) {
+		switch (e.key) {
+		case 'exitNodeHost':
+		case 'exitNodePort':
+			exitNode.disconnect();
+			exitNode.setSocket(cfg.get('exitNodeHost'),
+							   cfg.get('exitNodePort'));
+			exitNode.connect();
+			break;
+		}
+	});
 
 	$(exitNode).bind('connectStatus', function (e) {
 		console.log('connect', e);
@@ -156,11 +175,7 @@ $(function () {
 		minWidth: 550,
 		resizable: false
 	});
-	sendDialog.find('.amount').autoNumeric({
-		aSign: "BTC ",
-		mDec: 8,
-		aPad: 2
-	});
+	sendDialog.find('.amount').autoNumeric(autoNumericBtc);
 	$('#nav_send_money').click(function (e) {
 		e.preventDefault();
 		sendDialog.dialog('open');
@@ -299,6 +314,52 @@ $(function () {
 				transactionDb.parseChainData(data);
 			}, 'json');
 		});
+	});
+
+	// Settings Dialog
+	var cfgd = $('#dialog_settings');
+	cfgd.bind('dialogopen', function (e) {
+		// Populate fee field
+		var fee = $.fn.autoNumeric.Format('dialog_settings_fee', cfg.get('fee'), autoNumericBtc);
+		cfgd.find('#dialog_settings_fee').val(fee);
+
+		// Populate exit node fields
+		cfgd.find('#dialog_settings_exitNodeHost').val(cfg.get('exitNodeHost'));
+	});
+	cfgd.find('.controls .save').click(function (e) {
+		cfgd.dialog('close');
+
+		var newSettings = {};
+
+		newSettings.fee = +$.fn.autoNumeric.Strip("dialog_settings_fee");
+		newSettings.exitNodeHost = cfgd.find('#dialog_settings_exitNodeHost').val();
+
+		cfg.apply(newSettings);
+		return false;
+	});
+	cfgd.find('.controls .cancel').click(function (e) {
+		cfgd.dialog('close');
+	});
+	cfgd.dialog({
+		dialogClass: "block withsidebar",
+		autoOpen: false,
+		minWidth: 850,
+		resizable: false
+	});
+	$(".sidebar_content").hide();
+	$("ul.sidemenu li:first-child").addClass("active").show();
+	$(".block .sidebar_content:first").show();
+	$("ul.sidemenu li").click(function() {
+		var activeTab = $(this).find("a").attr("href");
+		window.location.hash = activeTab;
+		$(this).parent().find('li').removeClass("active");
+		$(this).addClass("active");
+		$(this).parents('.block').find(".sidebar_content").hide();
+		$(activeTab).show();
+		return false;
+	});
+	$('#nav .tools .settings').click(function () {
+		cfgd.dialog('open');
 	});
 
 	/*

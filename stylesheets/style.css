@@ -779,8 +779,12 @@ a:hover {
 	vertical-align: middle;
 	}
 
+.block form p.note {
+	margin: 0;
+	}
+
 .block form .note.error { color: #e3302c; }
-			
+
 .block form input.submit {
 	width: 85px;
 	height: 30px;
@@ -1046,6 +1050,10 @@ a:hover {
 	margin: 0;
 	}
 
+.ui-dialog.withsidebar {
+	padding: 0;
+	}
+
 .ui-state-default .icon-bitcoin {
 	background-image: url(../images/bitcoin.png);
 	}
@@ -1101,4 +1109,18 @@ table.txlist tr td.detail img {
 	width: 16px;
 	height: 16px;
 	cursor: pointer;
+	}
+
+#dialog_settings .controls {
+	position: absolute;
+	left: 210px;
+	bottom: 20px;
+	}
+
+#dialog_settings .sidebar_content {
+	padding-bottom: 60px;
+	}
+
+#dialog_settings form p {
+	clear: none;
 	}
