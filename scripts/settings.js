@@ -37,3 +37,20 @@ Settings.prototype.get = function (key, defValue) {
 		return defValue;
 	}
 };
+
+Settings.prototype.apply = function (newSettings) {
+	for (var i in newSettings) {
+		if (newSettings.hasOwnProperty(i)) {
+			if (newSettings[i] != this.settings[i]) {
+				var settingChangeEvent = jQuery.Event('settingsChange');
+				settingChangeEvent.key = i;
+				settingChangeEvent.oldValue = this.settings[i];
+				settingChangeEvent.newValue = newSettings[i];
+
+				this.settings[i] = newSettings[i];
+
+				$(this).trigger(settingChangeEvent);
+			}
+		}
+	}
+};
