@@ -26,7 +26,7 @@ Settings.globalDefaultSettings = {
 	// By default we'll look for an exit node running on the same
 	// host as the web server.
 	exitNodeHost: location.host,
-	exitNodePost: 3125
+	exitNodePort: 3125
 };
 
 Settings.prototype.get = function (key, defValue) {
