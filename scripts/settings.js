@@ -35,7 +35,7 @@ Settings.defaultSettings = {};
 // These are the hardcoded default settings
 Settings.globalDefaultSettings = {
 	// Currently, the recommended default fee is 0.1 BTC
-	fee: 0.01,
+	fee: "0.01",
 
 	// By default we'll look for an exit node running on the same
 	// host as the web server.

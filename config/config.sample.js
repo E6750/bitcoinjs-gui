@@ -17,7 +17,7 @@ Settings.defaultSettings = {
 	// bitcoinjs-gui will like adapt this setting as the network
 	// properties change.
 	//
-	//fee: 0.01,
+	//fee: "0.01",
 
 	//
 	// Hostname of the default exit node

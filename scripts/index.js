@@ -339,6 +339,7 @@ $(function () {
 	});
 	cfgd.find('.controls .cancel').click(function (e) {
 		cfgd.dialog('close');
+		return false;
 	});
 	cfgd.dialog({
 		dialogClass: "block withsidebar",
@@ -351,7 +352,6 @@ $(function () {
 	$(".block .sidebar_content:first").show();
 	$("ul.sidemenu li").click(function() {
 		var activeTab = $(this).find("a").attr("href");
-		window.location.hash = activeTab;
 		$(this).parent().find('li').removeClass("active");
 		$(this).addClass("active");
 		$(this).parents('.block').find(".sidebar_content").hide();
@@ -360,6 +360,7 @@ $(function () {
 	});
 	$('#nav .tools .settings').click(function () {
 		cfgd.dialog('open');
+		return false;
 	});
 
 	/*

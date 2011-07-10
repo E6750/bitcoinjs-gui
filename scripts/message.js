@@ -8,7 +8,7 @@ var Message = function (msg, type) {
 	this.closeButton = $('<span class="close" title="Dismiss"></span>')
 		.appendTo(this.el)
 		.click(function () {
-			$(this).parent().fadeOut('slow', function() { $(this).remove(); });
+			$(this).parent().fadeOut('fast', function() { $(this).remove(); });
 		})
 	;
 };
