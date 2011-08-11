@@ -97,7 +97,6 @@ a:hover {
 
 #header h1 a { color: #fff; }
 #header h1 a:hover { color: #008ee8; }
-	
 
 /* Navigation */
 #header #nav, #header #nav * { z-index: 20; }
@@ -126,8 +125,13 @@ a:hover {
 	background: url(../images/nsp.gif) center right no-repeat;
 	line-height: 50px;
 	}
-	
+
 #header #nav li.nobg { background: none; }
+
+#header #nav li.logo {
+  padding-left: 0;
+  background-image: none;
+}
 
 #header #nav ul {
 	margin: 0;
@@ -140,6 +144,10 @@ a:hover {
 	top: 50px;
 	left: 0;
 	}
+
+#header #nav li.logo ul {
+  left: -14px;
+  }
 
 #header #nav ul:after /*From IE 7 lack of compliance*/{
 	clear: both;
@@ -173,6 +181,12 @@ a:hover {
 	height: 30px;
 	padding: 0 10px;
 	}
+
+#header #nav li.logo a {
+  padding-left: 0;
+  padding-right: 12px;
+  background: url(../images/dropdown.png) center right no-repeat;
+  }
 	
 #header #nav li.active a { color: #ddd; }
 #header #nav li.active a:hover { color: #fff; }
@@ -275,17 +289,23 @@ a:hover {
 
 #header .connectstatus {
 	float: right;
-	height: 50px;
-	background-image: url(../images/hdrc.png);
-	background-position: bottom left;
+	height: 21px;
+  line-height: 21px;
+	background: url(../images/hdrc.png) 0px -150px repeat-x;
 	padding: 0 10px;
 	border: 1px solid black;
 	border-top: 0;
-	border-bottom: 0;
+  border-radius: 0px 0px 4px 4px;
 }
 
 #header .connectstatus.ok {
 	background-position: top left;
+  color: #83E788;
+}
+
+#header .connectstatus.unknown {
+	background-position: 0px -150px;
+  color: #333;
 }
 
 #exitnode_status div {

@@ -13,31 +13,31 @@
 	<script type="text/javascript" src="scripts/jquery/jquery-ui-1.8.11.custom.min.js"></script>
 	<script type="text/javascript" src="scripts/zeroclipboard/ZeroClipboard.js"></script>
 	<script type="text/javascript" src="scripts/autoNumeric-1.6.2.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/crypto-js/crypto.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/crypto-js/crypto.js"></script>
 
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/crypto-js/sha256.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/crypto-js/ripemd160.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/jsbn/prng4.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/jsbn/rng.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/jsbn/jsbn.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/jsbn/jsbn2.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/crypto-js/sha256.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/crypto-js/ripemd160.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/jsbn/prng4.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/jsbn/rng.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/jsbn/jsbn.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/jsbn/jsbn2.js"></script>
 
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/jsbn/ec.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/jsbn/sec.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/events/eventemitter.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/bitcoin.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/util.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/base58.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/jsbn/ec.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/jsbn/sec.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/events/eventemitter.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/bitcoin.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/util.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/base58.js"></script>
 
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/address.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/ecdsa.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/eckey.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/opcode.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/script.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/transaction.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/address.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/ecdsa.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/eckey.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/opcode.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/script.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/transaction.js"></script>
 
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/wallet.js"></script>
-	<script type="text/javascript" src="scripts/bitcoinjs-lib/txdb.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/wallet.js"></script>
+	<script type="text/javascript" src="scripts/bitcoinjs-lib/src/txdb.js"></script>
 	<script type="text/javascript" src="scripts/settings.js"></script>
 	<script type="text/javascript" src="config/config.js"></script>
 	<script type="text/javascript" src="scripts/util.js"></script>
@@ -55,23 +55,18 @@
 		<div class="hdrl"></div>
 		<div class="hdrr"></div>
 		
-		<h1><a href="#">WebCoin</a></h1>
 
 		
 		<ul id="nav">
+      <li class="logo"><h1><a href="#">WebCoin</a></h1>
+  			<ul>
+  			  <li><a id="address_load_open" href="#">Transaction Viewer...</a></li>
+	  		  <li><a class="settings" href="#">Settings...</a></li>
+		  	</ul>
+      </li>
 		  <!--
 		  <li><a href="#">Dashboard</a></li>
 		  <li class="active"><a href="#">Pages</a>
-		  -->
-		  <li class="tools">
-			<a href="#">Tools</a>
-			<ul>
-			  <li><a id="address_load_open" href="#">Transaction Viewer</a></li>
-			  <li><a class="settings" href="#">Settings...</a></li>
-			</ul>
-		  </li>
-
-		  <!--
 		  <li><a href="#">Posts</a></li>
 		  <li><a href="#">Media</a>
 		  <ul>
@@ -85,7 +80,7 @@
 		  -->
 		</ul>
 		
-		<div id="exitnode_status" class="connectstatus unknown"><div></div></div>
+		<div id="exitnode_status" class="connectstatus unknown">exit.trucoin.com</div>
 	  </div><!-- END #header -->
 	  <div class="block">
   <div class="block_head">

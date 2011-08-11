@@ -12,17 +12,17 @@ var ExitNode = function (host, port, wallet, txDb, txMem, txView) {
 };
 
 ExitNode.prototype.setSocket = function (host, port) {
-	this.socket = new io.Socket(host, {port: port});
+  this.uri = "http://"+host+":"+port;
+};
+
+ExitNode.prototype.connect = function () {
+	this.socket = io.connect(this.uri);
 	this.socket.on('connect', $.proxy(this.handleConnect, this));
 	this.socket.on('error', function () {
 		console.log('error, test');
 	});
 	this.socket.on('message', $.proxy(this.handleMessage, this));
 	this.socket.on('disconnect', $.proxy(this.handleDisconnect, this));
-};
-
-ExitNode.prototype.connect = function () {
-	this.socket.connect();
 };
 
 ExitNode.prototype.disconnect = function () {
@@ -92,9 +92,6 @@ ExitNode.prototype.handleConnect = function () {
 
 
 ExitNode.prototype.handleMessage = function (data) {
-	console.log(data);
-	data = $.parseJSON(data);
-
 	// Handle JSON-RPC result messages
 	if ("undefined" !== typeof data.result &&
 		"function" == typeof this.callbacks[data.id]) {

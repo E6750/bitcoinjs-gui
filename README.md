@@ -23,8 +23,14 @@ This defines the default settings for all users of your installation.
 
 ## Installation
 
-Just make sure bitcoinjs-gui is part of the public folder of your HTTP
-server.
+Check out the code using
+
+``` sh
+git clone git://github.com/bitcoinjs/bitcoinjs-gui.git --recursive
+```
+
+From there, just make sure bitcoinjs-gui/index.html is accessible
+through an HTTP server.
 
 ## Running
 

@@ -271,14 +271,14 @@ $(function () {
 				}
 			});
 
-			$.get('/tx/send', {tx: txBase64}, function (data) {
+      exitNode.call("txSend", {tx: txBase64}, function (data) {
 				if (data.error) {
 					validateError("Error sending transaction: " +
 								  data.error.message);
 					return;
 				}
 				sendDialog.find('.loading p').text("Awaiting reply...");
-			}, 'json');
+			});
 		});
 	});
 
@@ -358,7 +358,7 @@ $(function () {
 		$(activeTab).show();
 		return false;
 	});
-	$('#nav .tools .settings').click(function () {
+	$('#nav .settings').click(function () {
 		cfgd.dialog('open');
 		return false;
 	});

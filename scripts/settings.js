@@ -34,14 +34,25 @@ Settings.defaultSettings = {};
 
 // These are the hardcoded default settings
 Settings.globalDefaultSettings = {
-	// Currently, the recommended default fee is 0.1 BTC
-	fee: "0.01",
+	// Currently, the minimum fee is 0.0005 BTC
+	fee: "0.0005",
 
 	// By default we'll look for an exit node running on the same
 	// host as the web server.
 	exitNodeHost: location.host,
 	exitNodePort: 3125
 };
+
+/**
+ * These functions sanitize the value for a setting.
+ *
+ * Note that they're also used for validation: If a value does not
+ * follow the correct format, it throws an exception.
+ */
+Settings.normalizer = {
+
+};
+
 
 Settings.prototype.get = function (key, defValue) {
 	if ("undefined" !== typeof this.settings[key] &&
