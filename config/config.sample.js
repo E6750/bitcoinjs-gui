@@ -17,7 +17,7 @@ Settings.defaultSettings = {
 	// bitcoinjs-gui will like adapt this setting as the network
 	// properties change.
 	//
-	//fee: "0.01",
+	//fee: "0.0005",
 
 	//
 	// Hostname of the default exit node
@@ -31,5 +31,12 @@ Settings.defaultSettings = {
 	//
 	// The default port for BitcoinJS exit nodes is 3125.
 	//
-	//exitNodePort: 3125
+	//exitNodePort: 3125,
+
+	//
+	// Whether the exit node uses HTTPS/SSL
+	//
+	// Defaults to false
+	//
+	//exitNodeSecure: false
 };

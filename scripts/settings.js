@@ -40,7 +40,8 @@ Settings.globalDefaultSettings = {
 	// By default we'll look for an exit node running on the same
 	// host as the web server.
 	exitNodeHost: location.host,
-	exitNodePort: 3125
+	exitNodePort: 3125,
+	exitNodeSecure: false
 };
 
 /**

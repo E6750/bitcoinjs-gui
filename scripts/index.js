@@ -68,7 +68,9 @@ $(function () {
 	// Once wallet is loaded, we can connect to the exit node
 	var exitNodeHost = cfg.get('exitNodeHost');
 	var exitNodePort = cfg.get('exitNodePort');
-	var exitNode = new ExitNode(exitNodeHost, +exitNodePort, wallet, txDb, txMem, txView);
+	var exitNodeSecure = cfg.get('exitNodeSecure');
+	var exitNode = new ExitNode(exitNodeHost, +exitNodePort, !!exitNodeSecure,
+                              wallet, txDb, txMem, txView);
 
 	$(cfg).bind('settingChange', function (e) {
 		switch (e.key) {

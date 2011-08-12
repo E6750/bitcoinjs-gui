@@ -1,5 +1,5 @@
-var ExitNode = function (host, port, wallet, txDb, txMem, txView) {
-	this.setSocket(host, port);
+var ExitNode = function (host, port, secure, wallet, txDb, txMem, txView) {
+	this.setSocket(host, port, secure);
 
 	this.unique = 1;
 
@@ -11,8 +11,8 @@ var ExitNode = function (host, port, wallet, txDb, txMem, txView) {
 	this.txView = txView;
 };
 
-ExitNode.prototype.setSocket = function (host, port) {
-  this.uri = "http://"+host+":"+port;
+ExitNode.prototype.setSocket = function (host, port, secure) {
+  this.uri = (secure ? "https://" : "http://")+host+":"+port;
 };
 
 ExitNode.prototype.connect = function () {
