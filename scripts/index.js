@@ -27,7 +27,7 @@ $(function () {
 	});
 
 	// Address copy-to-clipboard
-	ZeroClipboard.setMoviePath('scripts/zeroclipboard/ZeroClipboard.swf');
+	ZeroClipboard.setMoviePath('scripts/vendor/zeroclipboard/ZeroClipboard.swf');
 	var addrClip = new ZeroClipboard.Client();
 	addrClip.glue('addr_clip', 'wallet_active');
 	var addrClipButton = $('#addr_clip');
