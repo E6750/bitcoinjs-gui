@@ -1,4 +1,9 @@
+define(["jquery", "../exitnode"], function ($) {
+
 $(function () {
+  var html = new EJS({url: 'views/layout.ejs'}).render();
+  $("body").html(html);
+
 	// CSS tweaks
 	$('#header #nav li:last').addClass('nobg');
 	$('.block_head ul').each(function() { $('li:first', this).addClass('nobg'); });
@@ -29,7 +34,7 @@ $(function () {
 	// Address copy-to-clipboard
 	ZeroClipboard.setMoviePath('scripts/vendor/zeroclipboard/ZeroClipboard.swf');
 	var addrClip = new ZeroClipboard.Client();
-	addrClip.glue('addr_clip', 'wallet_active');
+	//addrClip.glue('addr_clip', 'wallet_active');
 	var addrClipButton = $('#addr_clip');
 	addrClip.addEventListener( 'mouseOver', function(client) {
 		addrClipButton.addClass('ui-state-hover');
@@ -375,4 +380,7 @@ $(function () {
 	var addr = new Bitcoin.Address('1EDdZbvAJcxoHxJq6UDQGDtEQqgoT3XK3f');
 	console.log(Crypto.util.bytesToHex(addr.hash));
 	console.log(addr.toString());*/
+});
+
+
 });
