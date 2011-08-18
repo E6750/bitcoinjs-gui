@@ -1,50 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>WebCoin ALPHA</title>
-	<link rel="stylesheet" href="stylesheets/aristo/jquery-ui-1.8.7.custom.css">
-	<link rel="stylesheet" href="stylesheets/style.css">
+<head>
+  <title>Webcoin</title>
+  <link rel="stylesheet" href="stylesheets/aristo/jquery-ui-1.8.7.custom.css">
+  <script type="text/javascript" src="scripts/settings.js"></script>
+  <script type="text/javascript" src="config/config.js"></script>
   <script data-main="scripts/loader" type="text/javascript" src="scripts/vendor/requirejs/require-jquery.js"></script>
-	<script type="text/javascript" src="scripts/vendor/json/json2.js"></script>
-	<script type="text/javascript" src="scripts/vendor/ejs/ejs.js"></script>
-	<script type="text/javascript" src="scripts/vendor/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="scripts/vendor/json/json2.js"></script>
+  <script type="text/javascript" src="scripts/vendor/persist-js/persist-min.js"></script>
+  <script type="text/javascript" src="scripts/vendor/ejs/ejs.js"></script>
+  <script type="text/javascript" src="scripts/vendor/socket.io/socket.io.js"></script>
 
-	<script type="text/javascript" src="scripts/vendor/jquery/jquery.json-2.2.js"></script>
-	<script type="text/javascript" src="scripts/vendor/jquery/jquery-ui-1.8.11.custom.min.js"></script>
-	<script type="text/javascript" src="scripts/vendor/zeroclipboard/ZeroClipboard.js"></script>
-	<script type="text/javascript" src="scripts/vendor/autoNumeric-1.6.2.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/crypto-js/crypto.js"></script>
+  <script type="text/javascript" src="scripts/vendor/jquery/jquery.json-2.2.js"></script>
+  <script type="text/javascript" src="scripts/vendor/jquery/jquery.qrcode.min.js"></script>
+  <script type="text/javascript" src="scripts/vendor/jquery/jquery-ui-1.8.11.custom.min.js"></script>
+  <script type="text/javascript" src="scripts/vendor/zeroclipboard/ZeroClipboard.js"></script>
+  <script type="text/javascript" src="scripts/vendor/autoNumeric-1.6.2.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/crypto-js/crypto.js"></script>
 
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/crypto-js/sha256.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/crypto-js/ripemd160.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/prng4.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/rng.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/jsbn.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/jsbn2.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/crypto-js/sha256.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/crypto-js/ripemd160.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/prng4.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/rng.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/jsbn.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/jsbn2.js"></script>
 
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/ec.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/sec.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/events/eventemitter.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/bitcoin.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/util.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/base58.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/ec.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/jsbn/sec.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/events/eventemitter.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/bitcoin.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/util.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/base58.js"></script>
 
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/address.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/ecdsa.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/eckey.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/opcode.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/script.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/transaction.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/address.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/ecdsa.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/eckey.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/opcode.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/script.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/transaction.js"></script>
 
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/wallet.js"></script>
-	<script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/txdb.js"></script>
-	<script type="text/javascript" src="scripts/settings.js"></script>
-	<script type="text/javascript" src="config/config.js"></script>
-	<script type="text/javascript" src="scripts/util.js"></script>
-	<script type="text/javascript" src="scripts/desktop/message.js"></script>
-	<script type="text/javascript" src="scripts/walletmanager.js"></script>
-	<script type="text/javascript" src="scripts/desktop/txview.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/wallet.js"></script>
+  <script type="text/javascript" src="scripts/vendor/bitcoinjs-lib/src/txdb.js"></script>
+  <script type="text/javascript" src="scripts/util.js"></script>
+  <script type="text/javascript" src="scripts/desktop/message.js"></script>
+  <link rel="apple-touch-icon" href="images/iphone_icon.png"/>
 </head>
 <body>
+  <div id="about">
+    <h3>About</h3>
+
+    <p>This is <a href="https://github.com/bitcoinjs/bitcoinjs-gui">bitcoinjs-gui</a>, the open-source Bitcoin client in pure JavaScript.</p>
+    <p>The software is developed and supported by the <a href="http://bitcoinjs.org/">BitcoinJS</a> project.</p>
+    <p><a href="http://www.weusecoins.com/" target="_blank">Bitcoin</a> is a decentralized, open-source payment network and currency. You can learn more about it on <a href="http://www.bitcoin.org/" target="_blank">Bitcoin.org</a> and <a href="http://www.weusecoins.com/" target="_blank">WeUseCoins.com</a>.</p>
+  </div>
 </body>
 </html>

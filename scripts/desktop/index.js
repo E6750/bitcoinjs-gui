@@ -66,28 +66,13 @@ $(function () {
 	var txMem = new TransactionDatabase(); // Memory pool
 	var txView = new TransactionView($('#main_tx_list'));
 
-	txView.setDatabase(txDb);
-	txView.setMemPool(txMem);
-	txView.setWallet(wallet);
-
 	// Once wallet is loaded, we can connect to the exit node
 	var exitNodeHost = cfg.get('exitNodeHost');
 	var exitNodePort = cfg.get('exitNodePort');
 	var exitNodeSecure = cfg.get('exitNodeSecure');
 	var exitNode = new ExitNode(exitNodeHost, +exitNodePort, !!exitNodeSecure,
-                              wallet, txDb, txMem, txView);
+                              txDb, txMem, txView);
 
-	$(cfg).bind('settingChange', function (e) {
-		switch (e.key) {
-		case 'exitNodeHost':
-		case 'exitNodePort':
-			exitNode.disconnect();
-			exitNode.setSocket(cfg.get('exitNodeHost'),
-							   cfg.get('exitNodePort'));
-			exitNode.connect();
-			break;
-		}
-	});
 
 	$(exitNode).bind('connectStatus', function (e) {
 		console.log('connect', e);
@@ -95,34 +80,9 @@ $(function () {
 		$('#exitnode_status').addClass(e.status);
 	});
 
-	$(exitNode).bind('blockInit blockAdd blockRevoke', function (e) {
-		txView.setBlockHeight(e.height);
-	});
-
-	$(exitNode).bind('txData', function (e) {
-		for (var i = 0; i < e.txs.length; i++) {
-			wallet.process(e.txs[i]);
-		}
-		if (e.confirmed) {
-			txDb.loadTransactions(e.txs);
-		} else {
-			txMem.loadTransactions(e.txs);
-		}
-		updateBalance();
-	});
-
-	$(exitNode).bind('txAdd', function (e) {
-		txDb.addTransaction(e.tx);
-		txMem.removeTransaction(e.tx.hash);
-		updateBalance();
-	});
-
-	$(exitNode).bind('txNotify', function (e) {
-		console.log('txNotify', e);
-		wallet.process(e.tx);
-		txMem.addTransaction(e.tx);
-		updateBalance();
-	});
+  $(exitNode).bind('txData txAdd txNotify', function (e) {
+		  updateBalance();
+  });
 
 	$(walletMan).bind('walletProgress', function (e) {
 		$("#wallet_init_status").text("Creating wallet "+e.n+"/"+e.total);
@@ -137,16 +97,12 @@ $(function () {
 		$('#addr').val(addr);
 		addrClip.setText(addr);
 		addrClip.reposition();
-
-		exitNode.connect();
 	});
 
 	$(walletMan).bind('walletDeinit', function (e) {
 		$("#wallet_init_status").text("");
 		$('#wallet_active').hide();
 		$('#wallet_init').show();
-
-		exitNode.disconnect();
 	});
 
 	// Load wallet if there is one
@@ -217,14 +173,7 @@ $(function () {
 			validateError("Please enter an amount.");
 			return;
 		}
-		var valueComp = valueString.split('.');
-		var integralPart = valueComp[0];
-		var fractionalPart = valueComp[1] || "0";
-		while (fractionalPart.length < 8) fractionalPart += "0";
-		fractionalPart = fractionalPart.replace(/^0+/g, '');
-		var value = BigInteger.valueOf(parseInt(integralPart));
-		value = value.multiply(BigInteger.valueOf(100000000));
-		value = value.add(BigInteger.valueOf(parseInt(fractionalPart)));
+    var value = Bitcoin.Util.parseValue(valueString);
 		if (value.compareTo(BigInteger.ZERO) <= 0) {
 			validateError("Please enter a positive amount of Bitcoins.");
 			return;
@@ -278,10 +227,10 @@ $(function () {
 				}
 			});
 
-      exitNode.call("txSend", {tx: txBase64}, function (data) {
-				if (data.error) {
+      exitNode.call("txSend", {tx: txBase64}, function (err) {
+				if (err) {
 					validateError("Error sending transaction: " +
-								  data.error.message);
+								        data.error.message);
 					return;
 				}
 				sendDialog.find('.loading p').text("Awaiting reply...");
