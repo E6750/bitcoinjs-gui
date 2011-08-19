@@ -350,6 +350,7 @@ new Ext.Application({
             }
           }
         },{
+          id: 'view_send',
           title: 'Send',
           iconCls: 'upload',
           padding: '0 10 0 10',
@@ -838,10 +839,31 @@ new Ext.Application({
     });
 
     wm.init(function () {
+      
+      var queryItems = window.location.search.substr(1).split("&");
+      var amount = 0, address = 0, item;
+      for (var i=0; i < queryItems.length; i++) {
+        item = queryItems[i];
+        if (item.indexOf("amount=") == 0) {
+          amount = item.split('=')[1];
+        }
+        if (item.indexOf("address=") == 0) {
+          address = item.split('=')[1];
+        }
+      }
+      
       if (!wm.wallets.length) {
         // For new users, automatically take them to the wallet creation
         // wizard.
         Ext.getCmp('master').setActiveItem('view_createminiwallet');
+      }
+      else {
+        if (amount && address) {
+          Ext.getCmp('master').setActiveItem('view_main');
+          Ext.getCmp('view_main').setActiveItem('view_send');
+          document.getElementsByName('send_rcpt')[0].value = address;
+          document.getElementsByName('send_amount')[0].value = amount;
+        }
       }
     });
   }
