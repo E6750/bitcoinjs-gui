@@ -742,6 +742,28 @@ new Ext.Application({
         id: 'view_sending',
         cls: 'patiencescreen',
         html: '<div class="container"><div class="action">Sending coins...</div><div class="note">This may take a few moments, thank you for your patience.</div></div>'
+      },{
+        id: 'view_welcome',
+        cls: 'htmlview',
+        layout: 'vbox',
+        items: [{
+          html: "<h3>Welcome to Webcoin!</h3><p>It's a Bitcoin wallet that lives in your phone. You're looking at the first functional prototype. Use at your own risk!</p>",
+          padding: 10
+        },{
+          xtype: 'button',
+          text: 'Create My First Wallet',
+          ui: 'confirm',
+          margin: '0 10 10 10',
+          handler: function () {
+            Ext.getCmp('master').setActiveItem('view_createminiwallet');
+          }  
+        }],
+
+        dockedItems: [{
+          xtype: 'toolbar',
+          dock: 'top',
+          title: "Webcoin"
+        }]
       }]
     });
 
@@ -855,7 +877,7 @@ new Ext.Application({
       if (!wm.wallets.length) {
         // For new users, automatically take them to the wallet creation
         // wizard.
-        Ext.getCmp('master').setActiveItem('view_createminiwallet');
+        Ext.getCmp('master').setActiveItem('view_welcome');
       }
       else {
         if (amount && address) {
